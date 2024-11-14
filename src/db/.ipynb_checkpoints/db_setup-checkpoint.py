@@ -5,7 +5,8 @@ import requests
 import random
 import pandas as pd
 import shutil
-from sqlalchemy import create_engine
+
+
 """
 
 
@@ -192,25 +193,25 @@ def ingest_csv_data(filename: str):
 
     #1 Connect to the database file "utsc-excercise" using one of the helper functions above
     #  and save the return value into a variable called db_connection.
-    db_connection = create_engine('sqlite:///C:/Users/33782/utsc-exercise/src/db/utsc-exercise.db')
+ db_connection = create_engine('db/utsc-exercise.db')
 
     #2 Use pandas to load the CSV 'filename' into a dataframe which we'll call 'df'. If you are doing
-    df = pd.read_csv(filename, index_col=0)
+df = pd.read_csv(filename)
     # any cleaning of the dataframe after loading it, make a new variable called 'cleaned_df' and store the cleaned
     # dataframe there.
 
     #3 Now that you have the CSV data loaded into a dataframe, you need to insert the data into the SQL database.
     # Using the dataframe that you created above, as well as the database connection that you have instantiated,
     # use one of the helper functions above to insert the data into the database.
-    df.to_sql('employee', con=db_connection, if_exists='append', index=False)
+df.to_sql('employee', con=db_connection, if_exists='append', index=False)
     print("Employees have been added to the database.")
 
     #4 Now to show that you've finished processing the CSV file, move the file over to the hist folder 
     # Hint: use shutil.move and read the parameters it takes)
     # Hint: I personally use f-strings to use variables in the middle of strings, so in the destination path to move the file, I'd use f"hist/{filename}"
     # If you want the formal definition of what an f-string does: https://www.geeksforgeeks.org/formatted-string-literals-f-strings-python/
-    shutil.move(filename, f"hist/{filename}")
-    print(f"The {filename} file has been moved to the 'hist' folder.")
+shutil.move(filename, f"hist/{filename}")
+print(f"The {filename} file has been moved to the 'hist' folder.")
     
 
 def print_employee_dataframe():
